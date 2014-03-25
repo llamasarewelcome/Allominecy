@@ -1,0 +1,33 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package com.raphaellevy.allominecy.metals;
+
+import com.raphaellevy.allominecy.Allominecy;
+import static com.raphaellevy.allominecy.metals.StackedMetal.UseUp;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
+
+/**
+ *
+ * @author raffa
+ */
+public class Iron extends StackedMetal{
+    public static void burn(Player play, ItemStack soap, Allominecy plug) {
+        if ((play.getTargetBlock(null, 20).getType() == Material.IRON_BLOCK) || (play.getTargetBlock(null, 20).getType() == Material.GOLD_BLOCK)) {
+            plug.addtocurrallo(play);
+            if (plug.getConfig().getBoolean("players." + play.getPlayerListName() + ".iron")) {
+                Vector vec = play.getLocation().getDirection().multiply(2);
+                play.setVelocity(vec);
+            }
+            UseUp(soap, play);
+        }
+    }
+}
