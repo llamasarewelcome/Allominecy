@@ -10,6 +10,7 @@ import com.raphaellevy.allominecy.metals.Bronze;
 import com.raphaellevy.allominecy.metals.Iron;
 import com.raphaellevy.allominecy.metals.Steel;
 import com.raphaellevy.allominecy.metals.Tin;
+import com.raphaellevy.allominecy.metals.Zinc;
 import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -34,6 +35,7 @@ public class Allominecy extends JavaPlugin implements Listener{
         this.myInv.setItem(1, FM.forge("Iron Vial", 64));
         this.myInv.setItem(2, FM.forge("Steel Vial", 64));
         this.myInv.setItem(3, FM.forge("Bronze Vial", 64));
+        this.myInv.setItem(4, FM.forge("Zinc Vial", 64));
         getCommand("metal").setExecutor(new MetCommand(this));
         getCommand("misting").setExecutor(new AddMetals(this));
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
@@ -57,6 +59,9 @@ public class Allominecy extends JavaPlugin implements Listener{
                 } else if(event.getItem().getItemMeta().getLore().contains("Bronze Vial")) {
                     
                     Bronze.burn(event.getPlayer(),event.getPlayer().getItemInHand(), this);
+                } else if(event.getItem().getItemMeta().getLore().contains("Zinc Vial")) {
+                    
+                    Zinc.burn(event.getPlayer(),event.getPlayer().getItemInHand(), this);
                 }
             }
         }
