@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
 /**
@@ -22,41 +23,44 @@ import org.bukkit.scheduler.BukkitTask;
  * @author raffa
  */
 public class Bronze extends StackedMetal{
-    public static void burn(Player play, ItemStack soap, Allominecy plug) {
+    public static void burn(final Player play, ItemStack soap, final Allominecy plug) {
         if (plug.getConfig().getBoolean("players." + play.getPlayerListName() + ".bronze")) {
+            UseUp(soap, play);
             for (Player pp : Bukkit.getOnlinePlayers()) {
                 pp.setMetadata("burning",new FixedMetadataValue(plug,false));
             }
-            SeekTask task2 = new SeekTask();
-            task2.runTaskLater(plug, 200);
+            
             List<MetadataValue> values;
             Boolean pppvalu = false;
-            while (task2.dun == false) {
-                for (Player ppp : Bukkit.getOnlinePlayers()) {
-                    values = ppp.getMetadata("burning");
-                    pppvalu = false;
-                    for (MetadataValue value : values) {
-                        if (value.getOwningPlugin() == plug) {
-                            pppvalu = (Boolean) value.value();
+            BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+            BukkitTask tt = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    for (Player ppp : Bukkit.getOnlinePlayers()) {
+                        List<MetadataValue> values = ppp.getMetadata("burning");
+                        Boolean pppvalu = false;
+                        pppvalu = values.get(0).asBoolean();
+                        if (pppvalu == true) {
+                            play.sendMessage(ppp.getPlayerListName() + "is burning metal");
                         }
+                        ppp.setMetadata("burning",new FixedMetadataValue(plug,false));
                     }
-                    if (pppvalu = true) {
-                        play.sendMessage(ppp.getPlayerListName() + "is burning metal");
-                    }
-                    ppp.setMetadata("burning",new FixedMetadataValue(plug,false));
                 }
-            }
-            
+            }.runTaskTimer(plug, 0, 20);
+            SeekTask task2 = new SeekTask(tt);
+            task2.runTaskLater(plug, 200);
         }
     }
     static class SeekTask extends BukkitRunnable {
         Boolean dun;
-        public SeekTask () {
+        BukkitTask tt;
+        public SeekTask (BukkitTask tt) {
             this.dun = false;
+            this.tt = tt;
         }
         @Override
         public void run() {
-            this.dun = true;
+            tt.cancel();
         }
         
     }
