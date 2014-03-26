@@ -1,0 +1,14 @@
+name: Allominecy
+version: 0.1
+main: com.raphaellevy.allominecy.Allominecy
+description: Allomancy from Mistborn in minecraft.
+commands:
+    metal:
+        aliases: []
+        description: d
+        usage: d
+    misting:
+        aliases: [mtg]
+        description: daf
+        usage: par
+    
