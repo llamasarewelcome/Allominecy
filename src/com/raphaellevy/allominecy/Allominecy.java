@@ -27,7 +27,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Allominecy extends JavaPlugin implements Listener{
     public Inventory myInv = Bukkit.createInventory(null, 9, "Choose a metal");
-    public ArrayList<Player> currallo = new ArrayList();
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
@@ -41,18 +40,6 @@ public class Allominecy extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(new MetMenu(), this);
         
         
-    }
-    public ArrayList<Player> getcurrallo() {
-        return this.currallo;
-    }
-    public void addtocurrallo(Player play) {
-        this.currallo.add(play);
-    }
-    public void remcurrallo(Player play) {
-        this.currallo.remove(play);
-    }
-    public void resetcurrallo() {
-        this.currallo = new ArrayList<>();
     }
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) { //define event

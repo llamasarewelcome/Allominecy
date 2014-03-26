@@ -11,6 +11,8 @@ import static com.raphaellevy.allominecy.metals.StackedMetal.UseUp;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -22,8 +24,9 @@ import org.bukkit.util.Vector;
 public class Iron extends StackedMetal{
     public static void burn(Player play, ItemStack soap, Allominecy plug) {
         if ((play.getTargetBlock(null, 20).getType() == Material.IRON_BLOCK) || (play.getTargetBlock(null, 20).getType() == Material.GOLD_BLOCK)) {
-            plug.addtocurrallo(play);
+            
             if (plug.getConfig().getBoolean("players." + play.getPlayerListName() + ".iron")) {
+                play.setMetadata("burning",new FixedMetadataValue(plug,true));
                 Vector vec = play.getLocation().getDirection().multiply(2);
                 play.setVelocity(vec);
             }

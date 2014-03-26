@@ -21,7 +21,6 @@ import org.bukkit.util.Vector;
  */
 public class Steel extends StackedMetal{
     public static void burn(Player play, ItemStack soap, Allominecy plug) {
-        plug.addtocurrallo(play);
         if (play.getTargetBlock(null, 40).getType() == Material.IRON_BLOCK) {
             
             if (plug.getConfig().getBoolean("players." + play.getPlayerListName() + ".steel")) {
