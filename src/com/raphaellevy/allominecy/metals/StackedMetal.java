@@ -6,6 +6,7 @@
 
 package com.raphaellevy.allominecy.metals;
 
+import com.raphaellevy.allominecy.Allominecy;
 import java.util.ArrayList;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

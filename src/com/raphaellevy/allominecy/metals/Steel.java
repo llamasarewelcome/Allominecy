@@ -25,7 +25,9 @@ public class Steel extends StackedMetal{
         if (play.getTargetBlock(null, 40).getType() == Material.IRON_BLOCK) {
             
             if (plug.getConfig().getBoolean("players." + play.getPlayerListName() + ".steel")) {
-                play.setMetadata("burning",new FixedMetadataValue(plug,true));
+                if (!plug.copp.getBurners().contains(play)) {
+                    play.setMetadata("burning", new FixedMetadataValue(plug, true));
+                }
 
                 Vector vec = play.getLocation().getDirection().multiply(-2);
                 play.setVelocity(vec);

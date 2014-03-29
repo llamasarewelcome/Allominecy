@@ -20,7 +20,9 @@ import org.bukkit.potion.PotionEffectType;
 public class Tin extends StackedMetal{
     public static void burn(Player play,ItemStack soap,Allominecy plug) {
         if(plug.getConfig().getBoolean("players."+ play.getPlayerListName() + ".tin")) {
-            play.setMetadata("burning",new FixedMetadataValue(plug,true));
+            if (!(plug.copp.getBurners().contains(play))) {
+                play.setMetadata("burning", new FixedMetadataValue(plug, true));
+            }
 
             play.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION,100,1),true);
         }

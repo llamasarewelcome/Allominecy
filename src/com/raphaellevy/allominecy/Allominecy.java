@@ -7,11 +7,13 @@
 package com.raphaellevy.allominecy;
 
 import com.raphaellevy.allominecy.metals.Bronze;
+import com.raphaellevy.allominecy.metals.Copper;
 import com.raphaellevy.allominecy.metals.Iron;
 import com.raphaellevy.allominecy.metals.Steel;
 import com.raphaellevy.allominecy.metals.Tin;
 import com.raphaellevy.allominecy.metals.Zinc;
 import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,6 +30,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Allominecy extends JavaPlugin implements Listener{
     public Inventory myInv = Bukkit.createInventory(null, 9, "Choose a metal");
+    public CopperManager copp;
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
@@ -36,12 +39,35 @@ public class Allominecy extends JavaPlugin implements Listener{
         this.myInv.setItem(2, FM.forge("Steel Vial", 64));
         this.myInv.setItem(3, FM.forge("Bronze Vial", 64));
         this.myInv.setItem(4, FM.forge("Zinc Vial", 64));
+        this.myInv.setItem(5, FM.forge("Copper Vial", 64));
         getCommand("metal").setExecutor(new MetCommand(this));
         getCommand("misting").setExecutor(new AddMetals(this));
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         Bukkit.getServer().getPluginManager().registerEvents(new MetMenu(), this);
+        this.copp = new CopperManager();
         
         
+    }
+    public class CopperManager {
+        public List<Player> copperBurners = new ArrayList<>();
+        public CopperManager() {
+            this.copperBurners.clear();
+        }
+        public List<Player> addBurner (Player play) {
+            if (!(this.copperBurners.contains(play))) {
+                this.copperBurners.add(play);
+            }
+            return this.copperBurners;
+        }
+        public List<Player> removeBurner (Player play) {
+            if (this.copperBurners.contains(play)) {
+                this.copperBurners.remove(play);
+            }
+            return this.copperBurners;
+        }
+        public List<Player> getBurners () {
+            return this.copperBurners;
+        }
     }
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) { //define event
@@ -62,6 +88,9 @@ public class Allominecy extends JavaPlugin implements Listener{
                 } else if(event.getItem().getItemMeta().getLore().contains("Zinc Vial")) {
                     
                     Zinc.burn(event.getPlayer(),event.getPlayer().getItemInHand(), this);
+                } else if(event.getItem().getItemMeta().getLore().contains("Copper Vial")) {
+                    
+                    Copper.burn(event.getPlayer(),event.getPlayer().getItemInHand(), this);
                 }
             }
         }

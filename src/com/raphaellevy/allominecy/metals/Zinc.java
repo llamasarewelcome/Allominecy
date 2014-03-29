@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 
 /**
  *
@@ -25,6 +26,10 @@ import org.bukkit.inventory.ItemStack;
 public class Zinc extends StackedMetal{
     public static void burn(Player play, ItemStack soap, Allominecy plug) {
         if (plug.getConfig().getBoolean("players." + play.getPlayerListName() + ".zinc")) {
+            if (!(plug.copp.getBurners().contains(play))) {
+                play.setMetadata("burning", new FixedMetadataValue(plug, true));
+            }
+            
             List<Entity> mobs = play.getNearbyEntities(10, 10, 10);
             for (Entity ent : mobs) {
                 if ((!(ent instanceof LivingEntity)) || (ent instanceof Player)) {
