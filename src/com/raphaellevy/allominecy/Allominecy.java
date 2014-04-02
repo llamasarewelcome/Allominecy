@@ -6,9 +6,11 @@
 
 package com.raphaellevy.allominecy;
 
+import com.raphaellevy.allominecy.metals.Brass;
 import com.raphaellevy.allominecy.metals.Bronze;
 import com.raphaellevy.allominecy.metals.Copper;
 import com.raphaellevy.allominecy.metals.Iron;
+import com.raphaellevy.allominecy.metals.Pewter;
 import com.raphaellevy.allominecy.metals.Steel;
 import com.raphaellevy.allominecy.metals.Tin;
 import com.raphaellevy.allominecy.metals.Zinc;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,22 +34,48 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Allominecy extends JavaPlugin implements Listener{
     public Inventory myInv = Bukkit.createInventory(null, 9, "Choose a metal");
     public CopperManager copp;
+    public BrassManager brass;
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-        this.myInv.setItem(0, FM.forge("Tin Vial", 64));
-        this.myInv.setItem(1, FM.forge("Iron Vial", 64));
-        this.myInv.setItem(2, FM.forge("Steel Vial", 64));
-        this.myInv.setItem(3, FM.forge("Bronze Vial", 64));
+        this.myInv.setItem(2, FM.forge("Tin Vial", 64));
+        this.myInv.setItem(0, FM.forge("Iron Vial", 64));
+        this.myInv.setItem(1, FM.forge("Steel Vial", 64));
+        this.myInv.setItem(7, FM.forge("Bronze Vial", 64));
         this.myInv.setItem(4, FM.forge("Zinc Vial", 64));
-        this.myInv.setItem(5, FM.forge("Copper Vial", 64));
+        this.myInv.setItem(6, FM.forge("Copper Vial", 64));
+        this.myInv.setItem(5, FM.forge("Brass Vial", 64));
+        this.myInv.setItem(3, FM.forge("Pewter Vial", 64));
         getCommand("metal").setExecutor(new MetCommand(this));
         getCommand("misting").setExecutor(new AddMetals(this));
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         Bukkit.getServer().getPluginManager().registerEvents(new MetMenu(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new Brass(this), this);
         this.copp = new CopperManager();
+        this.brass = new BrassManager();
         
         
+    }
+    public class BrassManager {
+        public List<Creature> soothed = new ArrayList<>();
+        public BrassManager() {
+            this.soothed.clear();
+        }
+        public List<Creature> sooth (Creature play) {
+            if (!(this.soothed.contains(play))) {
+                this.soothed.add(play);
+            }
+            return this.soothed;
+        }
+        public List<Creature> unSooth (Creature play) {
+            if (this.soothed.contains(play)) {
+                this.soothed.remove(play);
+            }
+            return this.soothed;
+        }
+        public List<Creature> getSoothed () {
+            return this.soothed;
+        }
     }
     public class CopperManager {
         public List<Player> copperBurners = new ArrayList<>();
@@ -91,6 +120,12 @@ public class Allominecy extends JavaPlugin implements Listener{
                 } else if(event.getItem().getItemMeta().getLore().contains("Copper Vial")) {
                     
                     Copper.burn(event.getPlayer(),event.getPlayer().getItemInHand(), this);
+                } else if(event.getItem().getItemMeta().getLore().contains("Brass Vial")) {
+                    
+                    Brass.burn(event.getPlayer(),event.getPlayer().getItemInHand(), this);
+                } else if(event.getItem().getItemMeta().getLore().contains("Pewter Vial")) {
+                    
+                    Pewter.burn(event.getPlayer(),event.getPlayer().getItemInHand(), this);
                 }
             }
         }
