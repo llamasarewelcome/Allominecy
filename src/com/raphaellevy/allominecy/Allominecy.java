@@ -33,8 +33,11 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Allominecy extends JavaPlugin implements Listener{
     public Inventory myInv = Bukkit.createInventory(null, 9, "Choose a metal");
+    
     public CopperManager copp;
     public BrassManager brass;
+    public Recipes reci;
+    
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
@@ -51,8 +54,12 @@ public class Allominecy extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         Bukkit.getServer().getPluginManager().registerEvents(new MetMenu(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new Brass(this), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new MVial(this), this);
+        //Bukkit.getServer().getPluginManager().registerEvents(new CraftMetal(this), this);
         this.copp = new CopperManager();
         this.brass = new BrassManager();
+        this.reci = new Recipes();
+        reci.add();
         
         
     }

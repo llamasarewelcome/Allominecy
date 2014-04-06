@@ -21,6 +21,8 @@ public class MetMenu implements Listener{
         if(event.getInventory().getName() == "Choose a metal") {
             if (event.getRawSlot() <= 8) {
                 event.getWhoClicked().getInventory().addItem(new ItemStack(event.getCurrentItem()));
+                
+                event.getWhoClicked().closeInventory();
                 event.setCancelled(true);
             }
             event.setCancelled(true);

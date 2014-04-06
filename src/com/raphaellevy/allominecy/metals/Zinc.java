@@ -26,6 +26,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 public class Zinc extends StackedMetal{
     public static void burn(Player play, ItemStack soap, Allominecy plug) {
         if (plug.getConfig().getBoolean("players." + play.getPlayerListName() + ".zinc")) {
+            UseUp();
             if (!(plug.copp.getBurners().contains(play))) {
                 play.setMetadata("burning", new FixedMetadataValue(plug, true));
             }
@@ -56,5 +57,9 @@ public class Zinc extends StackedMetal{
                 }
             }
         }
+    }
+
+    private static void UseUp() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
