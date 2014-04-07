@@ -1,5 +1,5 @@
 name: Allominecy
-version: 0.1
+version: 0.7
 main: com.raphaellevy.allominecy.Allominecy
 description: Allomancy from Mistborn in minecraft.
 commands:

@@ -22,8 +22,13 @@ public class MetCommand implements CommandExecutor{
     }
     @Override
     public boolean onCommand(CommandSender cs, Command cmnd, String string, String[] strings) {
-        Player play = (Player) cs;
-        play.openInventory(plug.myInv);
-        return true;
+        if (this.plug.lperm.hasPerm((Player) cs, "Allominecy", "metal")) {
+            Player play = (Player) cs;
+            play.openInventory(plug.myInv);
+            return true;
+        } else {
+            cs.sendMessage("no perm");
+            return true;
+        }
     }
 }

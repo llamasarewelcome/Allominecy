@@ -23,17 +23,22 @@ public class AddMetals implements CommandExecutor{
     }
     @Override
     public boolean onCommand(CommandSender cs, Command cmnd, String string, String[] strings) {
-        if (!(strings.length == 3)) {
-            return false;
+        if (this.plug.lperm.hasPerm((Player) cs, "Allominecy", "misting")) {
+            if (!(strings.length == 3)) {
+                return false;
+            }
+            Player play = Bukkit.getPlayer(strings[0]);
+            if (play == null) {
+                cs.sendMessage("Cant find player");
+                return false;
+            }
+            plug.getConfig().set("players." + play.getPlayerListName() + "." + strings[1], Boolean.parseBoolean(strings[2]));
+            plug.saveConfig();
+            return true;
+        } else {
+            cs.sendMessage("No perm");
+            return true;
         }
-        Player play = Bukkit.getPlayer(strings[0]);
-        if (play == null) {
-            cs.sendMessage("Cant find player");
-            return false;
-        }
-        plug.getConfig().set("players." + play.getPlayerListName() + "." + strings[1], Boolean.parseBoolean(strings[2]));
-        plug.saveConfig();
-        return true;
         
     }
     

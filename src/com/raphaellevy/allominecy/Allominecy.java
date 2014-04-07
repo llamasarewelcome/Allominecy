@@ -14,8 +14,10 @@ import com.raphaellevy.allominecy.metals.Pewter;
 import com.raphaellevy.allominecy.metals.Steel;
 import com.raphaellevy.allominecy.metals.Tin;
 import com.raphaellevy.allominecy.metals.Zinc;
+import com.raphaellevy.llamaperm.LlamaPerm;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Creature;
@@ -25,6 +27,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -37,6 +40,7 @@ public class Allominecy extends JavaPlugin implements Listener{
     public CopperManager copp;
     public BrassManager brass;
     public Recipes reci;
+    public LlamaPerm lperm;
     
     @Override
     public void onEnable() {
@@ -60,6 +64,13 @@ public class Allominecy extends JavaPlugin implements Listener{
         this.brass = new BrassManager();
         this.reci = new Recipes();
         reci.add();
+        
+        if (Bukkit.getPluginManager().getPlugin("LlamaPerm") != null) {
+            this.lperm = (LlamaPerm) Bukkit.getPluginManager().getPlugin("LlamaPerm");
+        } else {
+            Bukkit.getLogger().log(Level.WARNING, "Cant find llamaperm!");
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
         
         
     }
