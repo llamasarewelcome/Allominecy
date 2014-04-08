@@ -59,6 +59,7 @@ public class Allominecy extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(new MetMenu(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new Brass(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(new MVial(this), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new Lerasium(this), this);
         //Bukkit.getServer().getPluginManager().registerEvents(new CraftMetal(this), this);
         this.copp = new CopperManager();
         this.brass = new BrassManager();

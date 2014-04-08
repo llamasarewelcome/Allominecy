@@ -24,10 +24,28 @@ public class Recipes {
         Material[] mats = {Material.POTION,Material.GOLD_NUGGET};
         ShapedRecipe addRecipec = addRecipe(rec, "Metal Vial", abvs, mats);
         Bukkit.addRecipe(addRecipec);
+        ShapedRecipe addRecipel = addRecipe(new ItemStack(Material.QUARTZ),new String[] {"III","INI","III"}, "Lerasium Bead", new char[] {'I','N'}, new Material[] {Material.IRON_INGOT, Material.GOLD_NUGGET});
+        Bukkit.addRecipe(addRecipel);
         
     }
     public ShapedRecipe addRecipe(String[] rec, String lore, char[] abr, Material[] mats) {
        ItemStack wst = new ItemStack(Material.POTION, 64);
+       ItemMeta wmet = wst.getItemMeta();
+       ArrayList wlst = new ArrayList();
+       wlst.add(lore);
+       wmet.setLore(wlst);
+       wst.setItemMeta(wmet);
+       ShapedRecipe wrec = new ShapedRecipe(wst);
+       wrec.shape(rec);
+       int i =  0;
+       for (char c : abr) {
+           wrec.setIngredient(c, mats[i]);
+           i++;
+       }
+       return wrec;
+    }
+    public ShapedRecipe addRecipe(ItemStack seed, String[] rec, String lore, char[] abr, Material[] mats) {
+       ItemStack wst = seed;
        ItemMeta wmet = wst.getItemMeta();
        ArrayList wlst = new ArrayList();
        wlst.add(lore);
